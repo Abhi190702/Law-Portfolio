@@ -1,0 +1,79 @@
+.cursorDot,
+.cursorRing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.cursorDot {
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: var(--gold-light);
+}
+
+.cursorRing {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(232, 201, 122, 0.85);
+  color: var(--black);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  mix-blend-mode: difference;
+  transition:
+    width 0.25s var(--ease-out),
+    height 0.25s var(--ease-out),
+    margin 0.25s var(--ease-out),
+    background 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.hover {
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  background: rgba(232, 201, 122, 0.28);
+}
+
+.view {
+  width: 68px;
+  height: 68px;
+  margin: -34px 0 0 -34px;
+  background: var(--gold-light);
+  mix-blend-mode: normal;
+}
+
+@media (max-width: 1024px) {
+  .cursorRing {
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cursorDot,
+  .cursorRing {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .cursorDot,
+  .cursorRing {
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  .cursorDot,
+  .cursorRing {
+    display: none;
+  }
+}

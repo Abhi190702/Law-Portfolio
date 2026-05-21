@@ -1,0 +1,259 @@
+.section {
+  padding: clamp(7rem, 12vw, 11rem) 0;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(201, 168, 76, 0.08), transparent 26%),
+    var(--black);
+}
+
+.inner {
+  width: min(1180px, calc(100vw - 3rem));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: start;
+}
+
+.label {
+  color: var(--gold-light);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 6.4vw, 6.8rem);
+  font-weight: 400;
+  line-height: 0.96;
+  max-width: 620px;
+}
+
+.heading span {
+  display: block;
+  padding-bottom: 0.05em;
+  clip-path: inset(0 0 100% 0);
+}
+
+.links {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 2rem;
+  color: rgba(245, 240, 232, 0.72);
+  font-size: 0.85rem;
+}
+
+.links a,
+.links span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.links a {
+  color: var(--gold-light);
+}
+
+.resumeCard {
+  width: min(100%, 360px);
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 4.4rem 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(201, 168, 76, 0.32);
+  background: rgba(201, 168, 76, 0.06);
+  transition: var(--transition);
+}
+
+.resumeCard:hover {
+  border-color: rgba(201, 168, 76, 0.7);
+  background: rgba(201, 168, 76, 0.12);
+  transform: translateY(-3px);
+}
+
+.resumeCard img {
+  width: 4.4rem;
+  height: 4.4rem;
+  display: block;
+  object-fit: cover;
+}
+
+.resumeCard span {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.resumeCard strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.resumeCard small {
+  color: var(--gold-light);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(245, 240, 232, 0.13);
+  background: rgba(18, 18, 21, 0.94);
+}
+
+.field {
+  position: relative;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 3.8rem;
+  padding: 1.25rem 1rem 0.45rem;
+  border: 1px solid rgba(245, 240, 232, 0.16);
+  border-radius: 0;
+  background: rgba(245, 240, 232, 0.035);
+  color: var(--white);
+  outline: 0;
+  transition: var(--transition);
+  color-scheme: dark;
+}
+
+.field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--gold-light) 50%),
+    linear-gradient(135deg, var(--gold-light) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.2rem) 1.72rem,
+    calc(100% - 0.86rem) 1.72rem;
+  background-size: 0.36rem 0.36rem, 0.36rem 0.36rem;
+  background-repeat: no-repeat;
+  padding-right: 2.6rem;
+}
+
+.field select option {
+  background: #111114;
+  color: var(--white);
+}
+
+.field select option:checked,
+.field select option:hover {
+  background: var(--gold);
+  color: var(--black);
+}
+
+.field textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.field label {
+  position: absolute;
+  top: 1.2rem;
+  left: 1rem;
+  color: rgba(245, 240, 232, 0.58);
+  pointer-events: none;
+  transform-origin: left center;
+  transition: var(--transition);
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: rgba(201, 168, 76, 0.62);
+}
+
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:focus + label,
+.field textarea:not(:placeholder-shown) + label,
+.field select:focus + label,
+.field select:valid + label {
+  transform: translateY(-1.08rem) scale(0.82);
+  color: var(--gold-light);
+}
+
+.submit {
+  min-height: 3.7rem;
+  border: 1px solid var(--gold);
+  color: var(--gold-light);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.submit:hover {
+  background: var(--gold-light);
+  color: var(--black);
+}
+
+.submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.error {
+  color: #ffb8a8;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.success {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--gold-light);
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.visible {
+  display: flex;
+}
+
+.success svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.success path {
+  fill: none;
+  stroke: var(--gold-light);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 72;
+  stroke-dashoffset: 72;
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading span {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    width: min(100vw - 1.5rem, 1180px);
+  }
+
+  .form {
+    padding: 1.25rem;
+  }
+}

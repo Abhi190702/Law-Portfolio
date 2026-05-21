@@ -1,0 +1,151 @@
+.section {
+  padding: clamp(7rem, 12vw, 11rem) 0;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(201, 168, 76, 0.1), transparent 28%),
+    var(--black);
+}
+
+.inner {
+  width: min(1180px, calc(100vw - 3rem));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.6fr 0.4fr;
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+}
+
+.label {
+  color: var(--gold-light);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.94;
+}
+
+.heading :global(.split-word) {
+  display: inline-block;
+  margin-right: 0.16em;
+  clip-path: inset(0 100% 0 0);
+}
+
+.copy {
+  max-width: 760px;
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  color: rgba(245, 240, 232, 0.76);
+  font-size: clamp(0.92rem, 1.2vw, 1.04rem);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 2rem;
+}
+
+.badge {
+  padding: 0.7rem 0.95rem;
+  border: var(--border-gold);
+  color: var(--gold-light);
+  background: rgba(201, 168, 76, 0.055);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.photoWrap {
+  position: relative;
+  justify-self: end;
+  width: min(420px, 100%);
+}
+
+.photoWrap::before {
+  content: '';
+  position: absolute;
+  inset: 1.2rem -1.2rem -1.2rem 1.2rem;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+}
+
+.photo {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  outline: 1px solid var(--gold-dark);
+  outline-offset: 8px;
+  background: var(--grey);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% 24%;
+  filter: grayscale(0.1) contrast(1.04);
+}
+
+.logoStamp {
+  position: absolute;
+  right: -1.4rem;
+  bottom: -1.6rem;
+  z-index: 2;
+  width: clamp(6rem, 10vw, 8.4rem);
+  aspect-ratio: 1 / 1;
+  padding: 0.35rem;
+  border: 1px solid rgba(201, 168, 76, 0.42);
+  background: rgba(6, 6, 8, 0.82);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+}
+
+.logoStamp img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .photoWrap {
+    justify-self: start;
+    order: -1;
+  }
+
+  .logoStamp {
+    right: 0.8rem;
+    bottom: -1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 6rem 0;
+  }
+
+  .heading {
+    font-size: clamp(2.7rem, 13vw, 5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    width: min(100vw - 1.5rem, 1180px);
+  }
+}

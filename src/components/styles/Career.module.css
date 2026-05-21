@@ -1,0 +1,162 @@
+.section {
+  padding: clamp(7rem, 12vw, 11rem) 0;
+  background: var(--black);
+}
+
+.inner {
+  width: min(1180px, calc(100vw - 3rem));
+  margin: 0 auto;
+}
+
+.label {
+  color: var(--gold-light);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 860px;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 4rem;
+  margin-top: 5rem;
+  padding: 2rem 0;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
+.line line {
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.card {
+  position: relative;
+  width: min(46%, 520px);
+  padding: 2rem;
+  border: 1px solid rgba(245, 240, 232, 0.13);
+  background: rgba(18, 18, 21, 0.94);
+}
+
+.card:nth-of-type(odd) {
+  justify-self: start;
+}
+
+.card:nth-of-type(even) {
+  justify-self: end;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1px solid var(--gold-light);
+  background: var(--black);
+  transform: rotate(45deg);
+}
+
+.card:nth-of-type(odd)::after {
+  right: calc(-8.7% - 0.4rem);
+}
+
+.card:nth-of-type(even)::after {
+  left: calc(-8.7% - 0.4rem);
+}
+
+.year {
+  color: var(--gold-light);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+.card p {
+  margin-top: 0.8rem;
+  color: rgba(245, 240, 232, 0.72);
+}
+
+.card strong {
+  display: block;
+  margin-top: 1.1rem;
+  color: var(--gold-light);
+  font-weight: 400;
+}
+
+.courses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  list-style: none;
+}
+
+.courses li {
+  padding: 0.45rem 0.6rem;
+  border: var(--border-gold);
+  color: rgba(245, 240, 232, 0.72);
+  font-size: 0.68rem;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    width: min(48%, 500px);
+  }
+}
+
+@media (max-width: 768px) {
+  .line {
+    left: 0.5rem;
+  }
+
+  .card,
+  .card:nth-of-type(odd),
+  .card:nth-of-type(even) {
+    width: calc(100% - 2rem);
+    justify-self: end;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    width: min(100vw - 1.5rem, 1180px);
+  }
+
+  .card {
+    padding: 1.4rem;
+  }
+}

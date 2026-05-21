@@ -1,0 +1,136 @@
+.section {
+  position: relative;
+  padding: clamp(7rem, 12vw, 11rem) 0;
+  background: var(--black);
+}
+
+.wireframe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100vw - 3rem));
+  margin: 0 auto;
+}
+
+.label {
+  color: var(--gold-light);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 880px;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 400;
+  line-height: 0.96;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 4rem;
+}
+
+.skill {
+  position: relative;
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  border: 1px solid rgba(245, 240, 232, 0.13);
+  background: rgba(18, 18, 21, 0.82);
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-out), border-color 0.35s var(--ease-out), background 0.35s var(--ease-out);
+}
+
+.skill::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(circle at 50% 12%, rgba(232, 201, 122, 0.14), transparent 48%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.skill:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201, 168, 76, 0.42);
+  background: rgba(22, 22, 25, 0.92);
+}
+
+.skill:hover::before {
+  opacity: 1;
+}
+
+.skill svg {
+  position: relative;
+  z-index: 1;
+  width: 130px;
+  height: 130px;
+  transform: rotate(-90deg);
+}
+
+.ringBg,
+.ring {
+  fill: none;
+  stroke-width: 8;
+}
+
+.ringBg {
+  stroke: rgba(245, 240, 232, 0.12);
+}
+
+.ring {
+  stroke: var(--gold-light);
+  stroke-linecap: round;
+}
+
+.percent {
+  position: absolute;
+  z-index: 2;
+  top: 5.2rem;
+  font-family: var(--font-display);
+  font-size: 2.35rem;
+}
+
+.name {
+  position: relative;
+  z-index: 2;
+  color: rgba(245, 240, 232, 0.72);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    width: min(100vw - 1.5rem, 1180px);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
