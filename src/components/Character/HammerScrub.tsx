@@ -31,17 +31,29 @@ function drawCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, canvas:
 }
 
 function localImages() {
-  return Array.from({ length: HAMMER_COUNT }, (_, index) => {
+  const mobileOptimized = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  const step = mobileOptimized ? 2 : 1;
+  const frames: HTMLImageElement[] = [];
+
+  for (let frame = 1; frame <= HAMMER_COUNT; frame += step) {
     const image = new Image();
-    const number = String(index + 1).padStart(3, '0');
+    const number = String(frame).padStart(3, '0');
     image.src = `/assets/images/hammer/ezgif-frame-${number}.jpg`;
-    return image;
-  });
+    frames.push(image);
+  }
+
+  if (frames.length && !frames[frames.length - 1].src.includes('ezgif-frame-050.jpg')) {
+    const image = new Image();
+    image.src = '/assets/images/hammer/ezgif-frame-050.jpg';
+    frames.push(image);
+  }
+
+  return frames;
 }
 
 export default function HammerScrub({ images }: HammerScrubProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const framesRef = useRef<HTMLImageElement[]>(images?.length ? images : localImages());
+  const framesRef = useRef<HTMLImageElement[]>([]);
   const currentFrame = useRef(-1);
 
   useEffect(() => {
@@ -56,6 +68,13 @@ export default function HammerScrub({ images }: HammerScrubProps) {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return undefined;
+
+    if (images && images.length === 0) return undefined;
+
+    framesRef.current = images?.length ? images : localImages();
+    if (!framesRef.current.length) return undefined;
+
+    const mobileOptimized = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
 
     const setCanvasSize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1 : 1.5);
@@ -73,6 +92,8 @@ export default function HammerScrub({ images }: HammerScrubProps) {
       const frame = framesRef.current[safeIndex];
       if (!frame || !frame.complete || !frame.naturalWidth) return;
       currentFrame.current = safeIndex;
+      canvas.dataset.frame = String(safeIndex);
+      canvas.dataset.frames = String(framesRef.current.length);
       requestAnimationFrame(() => drawCover(ctx, frame, canvas));
     };
 
@@ -82,27 +103,60 @@ export default function HammerScrub({ images }: HammerScrubProps) {
     if (firstFrame?.complete && firstFrame.naturalWidth) {
       drawCover(ctx, firstFrame, canvas);
     } else if (firstFrame) {
-      firstFrame.onload = () => drawCover(ctx, firstFrame, canvas);
+      firstFrame.addEventListener('load', () => drawCover(ctx, firstFrame, canvas), { once: true });
     }
+
+    let autoRaf = 0;
+    let autoActive = false;
+    let lastAutoTime = 0;
+
+    const startAutoPlay = () => {
+      if (autoRaf) return;
+
+      const tick = (time: number) => {
+        if (!autoActive) {
+          autoRaf = 0;
+          return;
+        }
+
+        if (time - lastAutoTime > 125) {
+          const nextFrame = (Math.max(currentFrame.current, 0) + 1) % framesRef.current.length;
+          drawFrame(nextFrame);
+          lastAutoTime = time;
+        }
+
+        autoRaf = requestAnimationFrame(tick);
+      };
+
+      autoRaf = requestAnimationFrame(tick);
+    };
 
     const trigger = ScrollTrigger.create({
       trigger: '#verdict',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.6,
+      start: mobileOptimized ? 'top bottom' : 'top top',
+      end: mobileOptimized ? 'bottom top' : 'bottom bottom',
+      scrub: mobileOptimized ? 0.25 : 0.6,
       onUpdate: (self) => {
-        const index = Math.min(Math.floor(self.progress * HAMMER_COUNT), HAMMER_COUNT - 1);
+        const frameCount = framesRef.current.length;
+        const index = Math.min(Math.floor(self.progress * frameCount), frameCount - 1);
         drawFrame(index);
+      },
+      onToggle: (self) => {
+        if (!mobileOptimized) return;
+        autoActive = self.isActive;
+        if (autoActive) startAutoPlay();
       }
     });
 
     window.addEventListener('resize', setCanvasSize);
 
     return () => {
+      autoActive = false;
+      cancelAnimationFrame(autoRaf);
       trigger.kill();
       window.removeEventListener('resize', setCanvasSize);
     };
-  }, []);
+  }, [images]);
 
   return <canvas ref={canvasRef} aria-hidden="true" />;
 }

@@ -12,6 +12,10 @@ export default function ParticleField({ variant = 'particles' }: ParticleFieldPr
     const mount = mountRef.current;
     if (!mount) return undefined;
 
+    if (window.matchMedia('(max-width: 768px), (pointer: coarse)').matches) {
+      return undefined;
+    }
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, mount.clientWidth / mount.clientHeight, 0.1, 100);
     camera.position.z = 6;

@@ -112,13 +112,18 @@
 
 @media (max-width: 768px) {
   .section {
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
+    height: 220vh;
+    min-height: 1380px;
+    overflow: visible;
   }
 
   .stickyContainer {
-    position: relative;
+    position: sticky;
+    height: 100svh;
+  }
+
+  .stickyContainer canvas {
+    height: 100svh;
   }
 
   .verdictText {
@@ -148,6 +153,11 @@
 }
 
 @media (max-width: 480px) {
+  .section {
+    height: 200vh;
+    min-height: 1160px;
+  }
+
   .label {
     font-size: 0.66rem;
   }

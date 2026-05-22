@@ -17,6 +17,17 @@ const STATUE_FRAME_COUNT = 240;
 const HAMMER_FRAME_COUNT = 50;
 const STATUE_ASSET_VERSION = 'statue-240-20260522';
 
+function frameRange(count: number, step: number) {
+  const frames: number[] = [];
+  for (let frame = 1; frame <= count; frame += step) {
+    frames.push(frame);
+  }
+  if (frames[frames.length - 1] !== count) {
+    frames.push(count);
+  }
+  return frames;
+}
+
 export default function MainContainer() {
   const { setProgress } = useLoading();
   const [statueImages, setStatueImages] = useState<HTMLImageElement[]>([]);
@@ -26,7 +37,11 @@ export default function MainContainer() {
     const statue: HTMLImageElement[] = [];
     const hammer: HTMLImageElement[] = [];
     let loaded = 0;
-    const total = STATUE_FRAME_COUNT + HAMMER_FRAME_COUNT;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mobileOptimized = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+    const statueFrames = frameRange(STATUE_FRAME_COUNT, mobileOptimized || prefersReducedMotion ? 6 : 1);
+    const hammerFrames = frameRange(HAMMER_FRAME_COUNT, mobileOptimized || prefersReducedMotion ? 2 : 1);
+    const total = statueFrames.length + hammerFrames.length;
 
     const onLoad = () => {
       loaded += 1;
@@ -36,23 +51,23 @@ export default function MainContainer() {
       }
     };
 
-    for (let i = 1; i <= STATUE_FRAME_COUNT; i += 1) {
+    statueFrames.forEach((i) => {
       const img = new Image();
       const n = String(i).padStart(3, '0');
+      img.onload = onLoad;
+      img.onerror = onLoad;
       img.src = `/assets/images/statue/ezgif-frame-${n}.jpg?v=${STATUE_ASSET_VERSION}`;
-      img.onload = onLoad;
-      img.onerror = onLoad;
       statue.push(img);
-    }
+    });
 
-    for (let i = 1; i <= HAMMER_FRAME_COUNT; i += 1) {
+    hammerFrames.forEach((i) => {
       const img = new Image();
       const n = String(i).padStart(3, '0');
-      img.src = `/assets/images/hammer/ezgif-frame-${n}.jpg`;
       img.onload = onLoad;
       img.onerror = onLoad;
+      img.src = `/assets/images/hammer/ezgif-frame-${n}.jpg`;
       hammer.push(img);
-    }
+    });
 
     setStatueImages(statue);
     setHammerImages(hammer);
